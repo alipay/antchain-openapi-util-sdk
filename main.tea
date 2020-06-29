@@ -1,0 +1,30 @@
+/**
+ * This is a utility module
+ */
+
+/**
+ * Get timestamp
+ * @return the string
+ * @example 2006-01-02T15:04:05Z
+ * @error no error throws
+ */
+static function getTimestamp(): string;
+
+/**
+ * Judge if the api called success or not
+ * @param res the response
+ * @return the boolean
+ * @example true
+ * @error no error throws
+ */
+static function hasError(res: map[string]any): boolean;
+
+/**
+ * Calculate signature according to signedParams and secret
+ * @param signedParams the signed string
+ * @param secret the accesskey secret
+ * @return the signature string
+ * @example qlB4B1lFcehlWRelL7Fo4uNHPCs=
+ * @error no error throws
+ */
+static function getSignature(signedParams: map[string]string, secret: string): string;
