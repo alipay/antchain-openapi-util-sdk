@@ -1,0 +1,56 @@
+{
+	"scope": "alipaycloud",
+	"name": "AlipayUtil",
+	"version": "0.0.4",
+	"main": "./main.tea",
+	"releases": {
+		"go": "github.com/alipay/antchain-openapi-util-sdk/golang/service",
+		"java": "com.alipay:alipayutil:0.0.1",
+		"ts": "@alipaycloud/alipay-util:^1.0.0",
+		"csharp": "AlipayCloud.AlipayUtil:0.1.0",
+		"php": "alipaycloud/alipay-util:0.1.0",
+		"python": "alipaycloud_alipay_util:0.0.1"
+	},
+	"java": {
+		"package": "com.alipay.alipayutil",
+		"packageInfo": {
+			"description": "Alipay Cloud Util for Java",
+			"url": "https://github.com/alipay/antchain-openapi-util-sdk",
+			"licenseNmae": "The Apache License, Version 2.0",
+			"licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+			"developerId": "alipayproducts",
+			"developerName": "AlipayCloud SDK",
+			"developerEmail": "alipaysdk@alipay.com"
+		}
+	},
+	"csharp":{
+		"namespace": "AlipayCloud.AlipayUtil",
+		"className": "Client",
+		"packageInfo": {
+			"name": "alipayutil",
+			"title": "alipaycloud-alipayutil",
+			"description": "Alipay Cloud Util Library for .NET",
+			"company": "Alibaba Cloud, Inc"
+		}
+	},
+	"php": {
+		"package": "AlipayCloud.Alipay.Util",
+		"clientName": "Util",
+		"packageInfo": {
+			"name": "alipaycloud/alipay-util",
+			"desc": "Alipay Cloud Util Library for PHP",
+			"github": "https://github.com/alipay/antchain-openapi-util-sdk"
+		}
+	},
+	"python": {
+		"package": "alipaycloud_alipay_util",
+		"clientName": "client",
+		"packageInfo": {
+			"name": "alipaycloud_alipay_util",
+			"desc": "Alipay Cloud RiskControl SDK Library for Python",
+			"github": "https://github.com/alipay/antchain-openapi-util-sdk",
+			"author": "Alipay Cloud SDK",
+			"email": "sdk-team@alibabacloud.com"
+		}
+	}
+}
