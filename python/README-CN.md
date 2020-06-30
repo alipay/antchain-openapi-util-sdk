@@ -2,7 +2,7 @@
 
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-## Alipay Cloud Util Library for Python
+## Antchain Openapi Util SDK Library for Python
 
 
 ## 安装
@@ -12,8 +12,8 @@
 如未安装 `pip`, 请先至pip官网 [pip user guide](https://pip.pypa.io/en/stable/installing/?spm=5176.doc53090.2.7.zHDiNV "pip User Guide") 安装pip .
 
 ```bash
-# 安装 alipaycloud util
-pip install alipaycloud_alipay_util
+# 安装 antchain alipay util
+pip install antchain_alipay_util
 ```
 
 ## 问题

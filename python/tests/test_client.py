@@ -1,5 +1,5 @@
 import unittest
-from alipaycloud_alipay_util.client import Client
+from antchain_alipay_util.client import Client
 
 
 class TestClient(unittest.TestCase):
