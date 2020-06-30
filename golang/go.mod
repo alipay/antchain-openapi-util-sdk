@@ -1,4 +1,4 @@
-module github.com/alipay/antchain-openapi-util-sdk/golang
+module github.com/antchain-openapi-sdk-go/antchain-util
 
 go 1.14
 
