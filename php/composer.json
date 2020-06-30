@@ -1,0 +1,34 @@
+{
+  "name": "alipaycloud/alipay-util",
+  "description": "Alipay Cloud Util Library for PHP",
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [],
+  "require": {
+    "php": ">5.5",
+    "alibabacloud/tea-utils": "^0.2.3",
+    "phpunit/phpunit": "~4.8.35"
+  },
+  "autoload": {
+    "psr-4": {
+      "Alipaycloud\\Alipay\\Util\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Alipaycloud\\Alipay\\Util\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "fixer": "php-cs-fixer fix ./",
+    "test": [
+      "./vendor/bin/phpunit --colors=always"
+    ]
+  },
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "optimize-autoloader": true
+  },
+  "prefer-stable": true
+}

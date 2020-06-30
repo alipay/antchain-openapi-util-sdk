@@ -1,0 +1,33 @@
+{
+  "name": "@alipaycloud/alipay-util",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/client.js",
+  "scripts": {
+    "test": "mocha -r ts-node/register test/**/*.spec.ts",
+    "test-cov": "nyc -e .ts -r=html -r=text -r=lcov npm run test",
+    "build": "tsc",
+    "prepublishOnly": "tsc"
+  },
+  "author": "Alibaba Cloud SDK",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^12.12.26",
+    "@types/mocha": "^7.0.2",
+    "@types/rewire": "^2.5.28",
+    "mocha": "^7.2.0",
+    "rewire": "^5.0.0",
+    "nyc": "^15.0.0",
+    "source-map-support": "^0.5.16",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "@alicloud/tea-typescript": "latest",
+    "kitx": "^2.1.0"
+  },
+  "files": [
+    "dist",
+    "src"
+  ]
+}
