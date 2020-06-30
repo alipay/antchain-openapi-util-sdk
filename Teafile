@@ -4,52 +4,52 @@
 	"version": "0.0.5",
 	"main": "./main.tea",
 	"releases": {
-		"go": "github.com/alipay/antchain-openapi-util-sdk/golang/service",
-		"java": "com.alipay:alipayutil:0.0.1",
-		"ts": "@alipaycloud/alipay-util:^1.0.0",
-		"csharp": "AlipayCloud.AlipayUtil:0.1.0",
-		"php": "alipaycloud/alipay-util:0.1.0",
-		"python": "alipaycloud_alipay_util:0.0.2"
+		"go": "github.com/antchain-openapi-sdk-go/AlipayUtil/service:v0.0.1",
+		"java": "com.antchain:alipayutil:0.0.1",
+		"ts": "@antchain/alipay-util:^1.0.0",
+		"csharp": "AntChain.AlipayUtil:0.1.0",
+		"php": "antchain/alipay-util:0.1.0",
+		"python": "antchain_alipay_util:0.0.2"
 	},
 	"java": {
-		"package": "com.alipay.alipayutil",
+		"package": "com.antchain.alipayutil",
 		"packageInfo": {
-			"description": "Alipay Cloud Util for Java",
+			"description": "Ant Chain Util for Java",
 			"url": "https://github.com/alipay/antchain-openapi-util-sdk",
 			"licenseNmae": "The Apache License, Version 2.0",
 			"licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.txt",
 			"developerId": "alipayproducts",
-			"developerName": "AlipayCloud SDK",
+			"developerName": "AntChain SDK",
 			"developerEmail": "alipaysdk@alipay.com"
 		}
 	},
 	"csharp":{
-		"namespace": "AlipayCloud.AlipayUtil",
+		"namespace": "AntChain.AlipayUtil",
 		"className": "Client",
 		"packageInfo": {
 			"name": "alipayutil",
-			"title": "alipaycloud-alipayutil",
-			"description": "Alipay Cloud Util Library for .NET",
-			"company": "Alibaba Cloud, Inc"
+			"title": "antchain-alipayutil",
+			"description": "Ant Chain Util Library for .NET",
+			"company": "Ant Chain, Inc"
 		}
 	},
 	"php": {
-		"package": "AlipayCloud.Alipay.Util",
+		"package": "AntChain.Alipay.Util",
 		"clientName": "Util",
 		"packageInfo": {
-			"name": "alipaycloud/alipay-util",
-			"desc": "Alipay Cloud Util Library for PHP",
+			"name": "antchain/alipay-util",
+			"desc": "Ant Chain Util Library for PHP",
 			"github": "https://github.com/alipay/antchain-openapi-util-sdk"
 		}
 	},
 	"python": {
-		"package": "alipaycloud_alipay_util",
+		"package": "antchain_alipay_util",
 		"clientName": "client",
 		"packageInfo": {
-			"name": "alipaycloud_alipay_util",
-			"desc": "Alipay Cloud RiskControl SDK Library for Python",
+			"name": "antchain_alipay_util",
+			"desc": "Ant Chain Util Library for Python",
 			"github": "https://github.com/alipay/antchain-openapi-util-sdk",
-			"author": "Alipay Cloud SDK",
+			"author": "Ant Chain SDK",
 			"email": "sdk-team@alibabacloud.com"
 		}
 	}
