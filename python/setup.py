@@ -19,16 +19,16 @@ import os
 from setuptools import setup, find_packages
 
 """
-Setup module for alipaycloud_alipay_util.
+Setup module for antchain_alipay_util.
 Created on 06/09/2020
-@author: Alibaba Cloud
+@author: Ant Chain SDK
 """
 
-PACKAGE = "alipaycloud_alipay_util"
-DESCRIPTION = "The alipaycloud alipay util module of alibabaCloud Python SDK."
-AUTHOR = "Alibaba Cloud"
-AUTHOR_EMAIL = "alibaba-cloud-sdk-dev-team@list.alibaba-inc.com"
-URL = "https://github.com/aliyun/alipaycloud"
+PACKAGE = "antchain_alipay_util"
+DESCRIPTION = "The antchain alipay util module of alibabaCloud Python SDK."
+AUTHOR = "Ant Chain SDK"
+AUTHOR_EMAIL = "sdk-team@alibabacloud.com"
+URL = "https://github.com/alipay/antchain-openapi-util-sdk"
 TOPDIR = os.path.dirname(__file__) or "."
 VERSION = __import__(PACKAGE).__version__
 
@@ -43,7 +43,7 @@ setup_args = {
     'author_email': AUTHOR_EMAIL,
     'license': "Apache License 2.0",
     'url': URL,
-    'keywords': ['alipaycloud_alipay_util'],
+    'keywords': ['antchain_alipay_util'],
     'packages': find_packages(exclude=["tests*"]),
     'platforms': 'any',
     'install_requires': [],
@@ -62,4 +62,4 @@ setup_args = {
     )
 }
 
-setup(name='alipaycloud_alipay_util', **setup_args)
+setup(name='antchain_alipay_util', **setup_args)

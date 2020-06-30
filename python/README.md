@@ -1,7 +1,7 @@
 English | [简体中文](README-CN.md)
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-## Alipay Cloud Util Library for Python
+## Antchain Openapi Util SDK Library for Python
 
 ## Installation
 - **Install with pip**
@@ -9,8 +9,8 @@ English | [简体中文](README-CN.md)
 Python SDK uses a common package management tool named `pip`. If pip is not installed, see the [pip user guide](https://pip.pypa.io/en/stable/installing/?spm=5176.doc53090.2.7.zHDiNV "pip User Guide") to install pip.
 
 ```bash
-# Install the alipaycloud util
-pip install alipaycloud_alipay_util
+# Install the antchain alipay util
+pip install antchain_alipay_util
 ```
 
 ## Issues
