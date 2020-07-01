@@ -6,7 +6,9 @@
   "authors": [],
   "require": {
     "php": ">5.5",
-    "alibabacloud/tea-utils": "^0.2.3",
+    "alibabacloud/tea-utils": "^0.2.3"
+  },
+  "require-dev": {
     "phpunit/phpunit": "~4.8.35"
   },
   "autoload": {
