@@ -1,7 +1,7 @@
 {
 	"scope": "alipaycloud",
 	"name": "AlipayUtil",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"main": "./main.tea",
 	"releases": {
 		"go": "github.com/antchain-openapi-sdk-go/antchain-util/service:v0.0.1",
