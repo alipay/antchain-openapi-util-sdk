@@ -2,19 +2,19 @@ English | [简体中文](README-CN.md)
 
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-## Alipay Cloud Util Library for PHP
+## Ant Chain Util Library for PHP
 
 ## Installation
 
 ### Composer
 
 ```bash
-composer require alipaycloud/alipay-util
+composer require antchain/antchain-util
 ```
 
 ## Issues
 
-[Opening an Issue](https://github.com/aliyun/alipaycloud/issues/new), Issues not conforming to the guidelines may be closed immediately.
+[Opening an Issue](https://github.com/alipay/antchain-openapi-util-sdk/issues/new), Issues not conforming to the guidelines may be closed immediately.
 
 ## Changelog
 
@@ -22,7 +22,7 @@ Detailed changes for each release are documented in the [release notes](./Change
 
 ## References
 
-* [Latest Release](https://github.com/aliyun/alipaycloud)
+* [Latest Release](https://github.com/alipay/antchain-openapi-util-sdk)
 
 ## License
 

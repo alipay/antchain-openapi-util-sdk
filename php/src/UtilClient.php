@@ -1,12 +1,12 @@
 <?php
 
-namespace Alipaycloud\Alipay\Util;
+namespace AntChain\Util;
 
 /**
- * This is a utility module.
+ * This is a utility module
  */
-class Util
-{
+class UtilClient {
+
     /**
      * Get timestamp.
      *
