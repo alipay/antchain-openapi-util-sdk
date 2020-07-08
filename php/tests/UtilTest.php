@@ -1,8 +1,8 @@
 <?php
 
-namespace AlipayCloud\Alipay\Util\Tests;
+namespace AntChain\Util\Tests;
 
-use Alipaycloud\Alipay\Util\Util;
+use AntChain\Util\UtilClient;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,9 +26,9 @@ class UtilTest extends TestCase
         ];
         $this->assertEquals(
             'ak=1970121701099429&biz_content=%7B%22order_id%22%3A%22197002BB1bcb984cc0ab4c5ebed9c592df6acX80%22%2C%22user_id%22%3A%222088102285927804%22%7D&charset=UTF-8&msg_id=2798c9cf5f88f24bb7ab6a94733cab1m3l&msg_key=alipay.open.auth.appauth.cancelled&sign=ABC&sign_type=HmacSHA1&utc_timestamp=1518170340170&version=1.0',
-            Util::getSignatureString($params)
+            UtilClient::getSignatureString($params)
         );
 
-        $this->assertEquals('rcDNNSTdufjwCpRqzFpoV5bC0IU=', Util::getSignature($params, 'secret'));
+        $this->assertEquals('rcDNNSTdufjwCpRqzFpoV5bC0IU=', UtilClient::getSignature($params, 'secret'));
     }
 }
