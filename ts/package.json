@@ -1,5 +1,5 @@
 {
-  "name": "@alipaycloud/alipay-util",
+  "name": "@antchain/alipay-util",
   "version": "1.0.0",
   "description": "",
   "main": "dist/client.js",
