@@ -3,7 +3,7 @@ import hashlib
 import hmac
 import base64
 
-from urllib.parse import urlencode
+from urllib.parse import quote
 
 
 class Client:
@@ -27,7 +27,7 @@ class Client:
         if not res or res.get('response') is None:
             return False
         result_code = res['response'].get('result_code')
-        if result_code is not None and str(result_code).upper() != 'ok':
+        if result_code is not None and str(result_code).upper() != 'OK':
             return True
         return False
 
@@ -40,7 +40,16 @@ class Client:
         @param secret: the accesskey secret
         @return the signature string
         """
-        str_to_sign = urlencode(signed_params)
-        hash_val = hmac.new(secret.encode('utf-8'), str_to_sign.encode('utf-8'), hashlib.sha1).digest()
+        keys = sorted(list(signed_params.keys()))
+        str_to_sign = ""
+
+        for k in keys:
+            if signed_params[k] is not None:
+                str_to_sign += "&%s=%s" % (
+                    quote(k, safe=''),
+                    quote(signed_params[k], safe='')
+                )
+
+        hash_val = hmac.new(secret.encode('utf-8'), str_to_sign[1:].encode('utf-8'), hashlib.sha1).digest()
         signature = base64.b64encode(hash_val).decode('utf-8')
         return signature
