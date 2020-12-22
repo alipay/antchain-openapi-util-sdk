@@ -28,3 +28,25 @@ static function hasError(res: map[string]any): boolean;
  * @error no error throws
  */
 static function getSignature(signedParams: map[string]string, secret: string): string;
+
+/**
+ * Upload item with urlPath
+ * @param item the file
+ * @param urlPath the upload url
+ */
+static function putObject(item: readable, headers: map[string]string, urlPath: string) throws: void;
+
+/**
+ * Convert all params of body other than type of readable into content 
+ * @param body source Model
+ * @param content target Model
+ * @return void
+ */
+static function convert(body: $Model, content: $Model): void;
+
+/**
+ * Parse  headers into map[string]string 
+ * @param headers the target headers
+ * @return the map[string]string
+ */
+static function parseUploadHeaders(headers: any): map[string]string;
