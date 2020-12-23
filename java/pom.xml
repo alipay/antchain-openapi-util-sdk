@@ -4,11 +4,11 @@
 
     <groupId>com.antgroup.antchain.openapi</groupId>
     <artifactId>antchain-util</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
-    <name>alipayutil</name>
-    <description>Alipay UTILS for Java
+    <name>antchain-util</name>
+    <description>Ant Chain UTILS for Java
 
     Copyright (C) Alibaba Cloud Computing
     All rights reserved.
@@ -46,9 +46,9 @@
     </distributionManagement>
 
     <scm>
-        <connection></connection>
-        <developerConnection></developerConnection>
-        <url></url>
+        <connection>scm:git:git://github.com/alipay/antchain-openapi-util-sdk.git</connection>
+        <developerConnection>scm:git:git@github.com:alipay/antchain-openapi-util-sdk.git</developerConnection>
+        <url>https://github.com/alipay/antchain-openapi-util-sdk</url>
     </scm>
 
     <build>
