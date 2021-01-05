@@ -3,6 +3,7 @@ package com.antgroup.antchain.openapi.antchain.util;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.security.auth.login.AccountException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -42,18 +43,43 @@ public class Client {
             return false;
         }
         Map<String, Object> map = (Map<String, Object>) response.get("response");
-        Map<String, String> signedParams = new HashMap<>();
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            signedParams.put(entry.getKey(), entry.getValue().toString());
-        }
-        String sign = getSignature(signedParams, secret);
-        if (sign != response.get("sign")) {
-            return false;
-        }
         if (map != null && !"ok".equalsIgnoreCase(String.valueOf(map.get("result_code")))) {
             return true;
         }
+        String content = extractStringToSign(res);
+        String sign = sign(content, secret);
+        if (!response.get("sign").equals(sign)) {
+            return true;
+        }
         return false;
+    }
+
+    /**
+     * extract string form response to sign
+     *
+     * @param responseString the response string
+     * @return the string
+     */
+    private static String extractStringToSign(String responseString) {
+        String responseNodeKey = "\"response\"";
+        String signNodeKey = "\"sign\"";
+        int indexOfResponseNode = responseString.indexOf(responseNodeKey);
+        int indexOfSignNode = responseString.lastIndexOf(signNodeKey);
+        if (indexOfResponseNode < 0) {
+            return null;
+        }
+        if (indexOfSignNode < 0 || indexOfSignNode < indexOfResponseNode) {
+            indexOfSignNode = responseString.lastIndexOf('}') - 1;
+        }
+        int startIndex = responseString.indexOf('{',
+                indexOfResponseNode + responseNodeKey.length());
+        int endIndex = responseString.lastIndexOf("}", indexOfSignNode);
+
+        try {
+            return responseString.substring(startIndex, endIndex + 1);
+        } catch (IndexOutOfBoundsException e) {
+            throw e;
+        }
     }
 
     /**
@@ -63,13 +89,8 @@ public class Client {
      * @param secret       the accesskey secret
      * @return the signature string
      * @example qlB4B1lFcehlWRelL7Fo4uNHPCs=
-     * @error no error throws
      */
     public static String getSignature(Map<String, String> signedParams, String secret) throws Exception {
-        String charset = "UTF-8";
-        String algorithm = "HmacSHA1";
-        Mac mac = Mac.getInstance(algorithm);
-        mac.init(new SecretKeySpec(secret.getBytes(charset), algorithm));
         List<String> keys = new ArrayList<>();
         for (Map.Entry<String, String> item : signedParams.entrySet()) {
             if (item.getValue() == null || !item.getValue().startsWith("sign_type")) {
@@ -77,17 +98,31 @@ public class Client {
             }
         }
         Collections.sort(keys);
-
+        String content = "";
         for (int i = 0; i < keys.size(); ++i) {
             String key = keys.get(i);
             if (i != 0) {
-                mac.update("&".getBytes(charset));
+                content += "&";
             }
+            content += key + "=" + signedParams.get(key);
 
-            mac.update(URLEncoder.encode(key, charset).getBytes(charset));
-            mac.update("=".getBytes(charset));
-            mac.update(URLEncoder.encode(signedParams.get(key), charset).getBytes(charset));
         }
+        return sign(content, secret);
+    }
+
+    /**
+     * Calculate signature according to content and secret
+     *
+     * @param content the string to sign
+     * @param secret  the accesskey secret
+     * @return the signature string
+     */
+    private static String sign(String content, String secret) throws Exception {
+        String charset = "UTF-8";
+        String algorithm = "HmacSHA1";
+        Mac mac = Mac.getInstance(algorithm);
+        mac.init(new SecretKeySpec(secret.getBytes(charset), algorithm));
+        mac.update(URLEncoder.encode(content, charset).getBytes(charset));
         byte[] signData = mac.doFinal();
         return Base64.getEncoder().encodeToString(signData);
     }
@@ -146,4 +181,5 @@ public class Client {
         }
         return result;
     }
+
 }
