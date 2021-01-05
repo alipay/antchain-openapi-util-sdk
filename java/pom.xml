@@ -4,7 +4,7 @@
 
     <groupId>com.antgroup.antchain.openapi</groupId>
     <artifactId>antchain-util</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <packaging>jar</packaging>
 
     <name>antchain-util</name>
@@ -50,6 +50,19 @@
         <developerConnection>scm:git:git@github.com:alipay/antchain-openapi-util-sdk.git</developerConnection>
         <url>https://github.com/alipay/antchain-openapi-util-sdk</url>
     </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.75</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

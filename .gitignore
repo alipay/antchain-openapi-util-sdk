@@ -20,3 +20,4 @@ libraries/
 **/csharp/**/obj/
 .vs/
 go.sum
+*.iml
