@@ -5,10 +5,13 @@
   "license": "Apache-2.0",
   "authors": [],
   "require": {
-    "php": ">5.5"
+    "php": ">5.5",
+    "alibabacloud/tea": "^3.1",
+    "alibabacloud/tea-oss-utils": "^0.2.2",
+    "alibabacloud/tea-utils": "^0.2.12"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.8.35"
+    "phpunit/phpunit": "~4.8.35|^5.0"
   },
   "autoload": {
     "psr-4": {
