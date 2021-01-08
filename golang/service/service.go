@@ -8,11 +8,18 @@ import (
 	"crypto/hmac"
 	"crypto/sha1"
 	"encoding/base64"
+	"encoding/json"
+	"errors"
+	"io"
+	"net/http"
 	"net/url"
 	"strings"
 	"time"
 
+	ossutil "github.com/alibabacloud-go/tea-oss-utils/service"
+	util "github.com/alibabacloud-go/tea-utils/service"
 	"github.com/alibabacloud-go/tea/tea"
+	uuid "github.com/satori/go.uuid"
 )
 
 /**
@@ -41,17 +48,112 @@ func GetSignature(signedParams map[string]*string, secret *string) (_result *str
  * @param res the response
  * @return the boolean
  */
-func HasError(res map[string]interface{}) *bool {
-	if res == nil || res["response"] == nil {
-		return tea.Bool(false)
+func HasError(raw *string, secret *string) *bool {
+	res := tea.StringValue(raw)
+	tmp := make(map[string]interface{})
+	err := json.Unmarshal([]byte(res), &tmp)
+	if err != nil {
+		return tea.Bool(true)
+	}
+	if tmp["response"] == nil {
+		return tea.Bool(true)
 	}
 
-	real, ok := res["response"].(map[string]interface{})
+	real, ok := tmp["response"].(map[string]interface{})
 	if ok && real["result_code"] != nil && strings.ToLower(real["result_code"].(string)) != "ok" {
 		return tea.Bool(true)
 	}
 
-	return tea.Bool(false)
+	if tmp["sign"] == nil {
+		return tea.Bool(true)
+	}
+	s := strings.Index(res, "response")
+	end := strings.Index(res, "sign")
+	res = res[s:end]
+	s = strings.Index(res, "{")
+	end = strings.LastIndex(res, "}")
+	signToString := res[s : end+1]
+	sign := sign(signToString, tea.StringValue(secret))
+	signServer := tmp["sign"].(string)
+	if signServer == sign {
+		return tea.Bool(false)
+	}
+
+	return tea.Bool(true)
+}
+
+/**
+ * Upload item with urlPath
+ * @param item the file
+ * @param urlPath the upload url
+ */
+func PutObject(item io.Reader, headers map[string]*string, urlPath *string) error {
+	req, err := http.NewRequest("PUT", tea.StringValue(urlPath), item)
+	if err != nil {
+		return err
+	}
+	for k, v := range headers {
+		req.Header.Add(k, tea.StringValue(v))
+	}
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return errors.New("Upload file failed.")
+	}
+
+	if resp.StatusCode >= 400 && resp.StatusCode < 600 {
+		bodyStr, err := util.ReadAsString(resp.Body)
+		if err != nil {
+			return err
+		}
+
+		respMap := ossutil.GetErrMessage(bodyStr)
+		if respMap["Code"] != nil && respMap["Code"].(string) == "CallbackFailed" {
+			return nil
+		}
+		return tea.NewSDKError(map[string]interface{}{
+			"code":    respMap["Code"],
+			"message": respMap["Message"],
+			"data": map[string]interface{}{
+				"httpCode":  resp.StatusCode,
+				"requestId": respMap["RequestId"],
+				"hostId":    respMap["HostId"],
+			},
+		})
+	}
+
+	return nil
+}
+
+/**
+ * Parse  headers into map[string]string
+ * @param headers the target headers
+ * @return the map[string]string
+ */
+func ParseUploadHeaders(headers interface{}) map[string]*string {
+	byt, err := json.Marshal(headers)
+	if err != nil {
+		return nil
+	}
+
+	tmp := make([]map[string]string, 0)
+	err = json.Unmarshal(byt, &tmp)
+	if err != nil {
+		return nil
+	}
+	res := make(map[string]*string)
+	for _, m := range tmp {
+		res[m["name"]] = tea.String(m["value"])
+	}
+	return res
+}
+
+/**
+ * Generate a nonce string
+ * @return the nonce string
+ */
+func GetNonce() *string {
+	uuid := uuid.NewV1().String()
+	return tea.String(strings.ReplaceAll(uuid, "-", ""))
 }
 
 func sign(stringToSign, accessKeySecret string) string {

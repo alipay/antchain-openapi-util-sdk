@@ -12,7 +12,8 @@ static function getTimestamp(): string;
 
 /**
  * Judge if the api called success or not
- * @param res the response
+ * @param res the response string
+ * @param secret the accesskey secret string
  * @return the boolean
  * @example true
  * @error no error throws
@@ -42,3 +43,9 @@ static function putObject(item: readable, headers: map[string]string, urlPath: s
  * @return the map[string]string
  */
 static function parseUploadHeaders(headers: any): map[string]string;
+
+/**
+ * Generate a nonce string
+ * @return the nonce string
+ */
+static function getNonce(): string;
