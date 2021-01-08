@@ -4,6 +4,8 @@ node_modules/
 .DS_Store
 doc/
 .classpath
+coverage.html
+coverage.out
 .project
 .vscode
 .settings
