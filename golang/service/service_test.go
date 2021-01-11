@@ -33,7 +33,7 @@ func Test_HasError(t *testing.T) {
 
 	tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"false"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}`
 	res = HasError(tea.String(tmp), tea.String("secret"))
-	utils.AssertEqual(t, tea.BoolValue(res), true)
+	utils.AssertEqual(t, tea.BoolValue(res), false)
 
 	tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"}}`
 	res = HasError(tea.String(tmp), tea.String("secret"))
