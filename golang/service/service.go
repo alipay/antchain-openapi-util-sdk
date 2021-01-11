@@ -61,7 +61,7 @@ func HasError(raw *string, secret *string) *bool {
 
 	real, ok := tmp["response"].(map[string]interface{})
 	if ok && real["result_code"] != nil && strings.ToLower(real["result_code"].(string)) != "ok" {
-		return tea.Bool(true)
+		return tea.Bool(false)
 	}
 
 	if tmp["sign"] == nil {
