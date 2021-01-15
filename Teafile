@@ -1,15 +1,15 @@
 {
 	"scope": "antchain",
 	"name": "AntchainUtil",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"main": "./main.tea",
 	"releases": {
-		"go": "github.com/antchain-openapi-sdk-go/antchain-util/service:v0.0.1",
-		"java": "com.antgroup.antchain.openapi:antchain-util:0.1.0",
+		"go": "github.com/antchain-openapi-sdk-go/antchain-util/service:v0.0.2",
+		"java": "com.antgroup.antchain.openapi:antchain-util:0.1.2",
 		"ts": "@antchain/alipay-util:^1.0.0",
-		"csharp": "AntChain.AlipayUtil:0.1.0",
-		"php": "antchain/antchain-util:^0.1.0",
-		"python": "antchain_alipay_util:0.0.3"
+		"csharp": "AntChain.AlipayUtil:0.1.1",
+		"php": "antchain/antchain-util:^0.1.1",
+		"python": "antchain_alipay_util:0.0.4"
 	},
 	"java": {
 		"package": "com.antgroup.antchain.openapi.antchain.util",
