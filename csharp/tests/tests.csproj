@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\core\client.csproj" />
+    <ProjectReference Include="..\core\alipayutil.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Alipaycloud.AlipayUtil;
+using AntChain.AlipayUtil;
 using Xunit;
 
 namespace tests
@@ -10,7 +10,7 @@ namespace tests
         [Fact]
         public void Test_GetTimestamp()
         {
-            Assert.Contains("GMT",Client.GetTimestamp());
+            Assert.Equal(20, Client.GetTimestamp().Length);
         }
 
         [Fact]
@@ -28,33 +28,29 @@ namespace tests
         [Fact]
         public void Test_HasError()
         {
-            var resp = new Dictionary<string, string>
-            {
-                { "test","ok"}
-            };
+            string tmp = "testInvalidJson";
+            var res = Client.HasError(tmp, "secret");
+            Assert.True(res);
 
-            Assert.False(Client.HasError(resp));
+            tmp = "{\"noResponse\":\"true\"}";
+            res = Client.HasError(tmp, "secret");
+            Assert.True(res);
 
-            var resObj = new Dictionary<string, object>
-            {
-                { "response", new Dictionary<string,object>
-                {
-                    {"result_code", "OK" }
-                }
-                }
-            };
+            tmp = "{\"response\":{\"expired_time\":\"2021-01-04T17:04:42.072+08:00\",\"file_id\":\"kjiac1a298f8d\",\"req_msg_id\":\"79e093b3ae0f3f2c1\",\"result_code\":\"false\"},\"sign\":\"IUl/4uLq7utFnsjF1Zy6B6OWbCg=\"}";
+            res = Client.HasError(tmp, "secret");
+            Assert.False(res);
 
-            Assert.False(Client.HasError(resObj));
+            tmp = "{\"response\":{\"expired_time\":\"2021-01-04T17:04:42.072+08:00\",\"file_id\":\"kjiac1a298f8d\",\"req_msg_id\":\"79e093b3ae0f3f2c1\",\"result_code\":\"OK\"}}";
+            res = Client.HasError(tmp, "secret");
+            Assert.True(res);
 
-            resObj = new Dictionary<string, object>
-            {
-                { "response", new Dictionary<string,object>
-                {
-                    {"result_code", "Success" }
-                }
-                }
-            };
-            Assert.True(Client.HasError(resObj));
+            tmp = "{\"response\":{\"expired_time\":\"2021-01-04T17:04:42.072+08:00\",\"file_id\":\"kjiac1a298f8d\",\"req_msg_id\":\"79e093b3ae0f3f2c1\",\"result_code\":\"OK\"},\"sign\":\"IUl/4uLq7utFnsjF1Zy6B6OWbCg=\"}";
+            res = Client.HasError(tmp, "secret");
+            Assert.False(res);
+
+            tmp = "{\"response\":{\"expired_time\":\"2021-01-04T17:04:42.072+08:00\",\"file_id\":\"kjiac1a298f8d\",\"req_msg_id\":\"79e093b3ae0f3f2c1\",\"result_code\":\"OK\"},\"sign\":\"IUl/4uLqtFnsjF1Zy6B6OWbCg=\"}";
+            res = Client.HasError(tmp, "secret");
+            Assert.True(res);
         }
 
 

@@ -35,7 +35,7 @@ static function getSignature(signedParams: map[string]string, secret: string): s
  * @param item the file
  * @param urlPath the upload url
  */
-static function putObject(item: readable, headers: map[string]string, urlPath: string) throws: void;
+static async function putObject(item: readable, headers: map[string]string, urlPath: string) throws: void;
 
 /**
  * Parse  headers into map[string]string 
