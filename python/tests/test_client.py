@@ -48,31 +48,31 @@ class TestClient(unittest.TestCase):
 
     def test_has_error(self):
         tmp = 'testInvalidJson'
-        resp = Client.has_error(tmp, 'secret')
+        resp = Client.has_error(tmp, 'secret', 'ok')
         self.assertTrue(resp)
 
         tmp = '{"noResponse":"true"}'
-        resp = Client.has_error(tmp, 'secret')
+        resp = Client.has_error(tmp, 'secret', 'ok')
         self.assertTrue(resp)
 
         tmp = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":' \
               '"79e093b3ae0f3f2c1","result_code":"false"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}'
-        resp = Client.has_error(tmp, 'secret')
-        self.assertFalse(resp)
+        resp = Client.has_error(tmp, 'secret', 'ok')
+        self.assertTrue(resp)
 
         tmp = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":' \
               '"79e093b3ae0f3f2c1","result_code":"OK"}}'
-        resp = Client.has_error(tmp, 'secret')
+        resp = Client.has_error(tmp, 'secret', 'success')
         self.assertTrue(resp)
 
         tmp = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":' \
               '"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}'
-        resp = Client.has_error(tmp, 'secret')
+        resp = Client.has_error(tmp, 'secret', 'ok')
         self.assertFalse(resp)
 
         tmp = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":' \
               '"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLqtFnsjF1Zy6B6OWbCg="}'
-        resp = Client.has_error(tmp, 'secret')
+        resp = Client.has_error(tmp, 'secret', 'ok')
         self.assertTrue(resp)
 
     def test_get_signature(self):
