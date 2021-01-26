@@ -30,16 +30,20 @@ class UtilClient
     /**
      * Judge if the api called success or not.
      *
-     * @param string $res    the response string
-     * @param string $secret the accesskey secret string
+     * @param string     $res          the response string
+     * @param string     $secret       the accesskey secret string
+     * @param null|mixed $success_code
      *
      * @return bool the boolean
      *
      * @example true
      * @error   no error throws
      */
-    public static function hasError($res, $secret)
+    public static function hasError($res, $secret, $success_code = null)
     {
+        if (null !== $success_code) {
+            $success_code = strtolower($success_code);
+        }
         $data = @json_decode($res, true);
         if (!$data) {
             return true;
@@ -48,7 +52,9 @@ class UtilClient
             return true;
         }
         $response = $data['response'];
-        if (isset($response['result_code']) && 'ok' !== strtolower($response['result_code'])) {
+        if (isset($response['result_code'])
+         && 'ok' !== strtolower($response['result_code'])
+         && $success_code !== strtolower($response['result_code'])) {
             return true;
         }
         if (!isset($data['sign'])) {
@@ -90,9 +96,9 @@ class UtilClient
      * @param string[] $headers
      * @param string   $urlPath the upload url
      *
-     * @return null|TeaError
      * @throws \GuzzleHttp\Exception\GuzzleException
      *
+     * @return null|TeaError
      */
     public static function putObject($item, $headers, $urlPath)
     {
