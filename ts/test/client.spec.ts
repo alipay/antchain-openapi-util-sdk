@@ -17,23 +17,40 @@ describe('base client', function () {
   });
 
   it('hasError should ok', async function () {
-    assert.strictEqual(BaseClient.hasError({ test: 'ok' }), false)
-    assert.strictEqual(BaseClient.hasError({
-      response: {
-        result_code: 'ok'
-      }
-    }), false)
-    assert.strictEqual(BaseClient.hasError(undefined), false)
-    assert.strictEqual(BaseClient.hasError({
-      response: {
-        result_code: 'success'
-      }
-    }), true)
+    let tmp = 'testInvalidJson';
+    //let res = BaseClient.hasError(tmp, "secret");
+    //assert.strictEqual(res, true);
+
+    tmp = `{"noResponse":"true"}`;
+    let res = BaseClient.hasError(tmp, "secret");
+    assert.strictEqual(res, true);
+
+    tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"false"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}`;
+    res = BaseClient.hasError(tmp, "secret");
+    assert.strictEqual(res, false);
+
+    tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"}}`;
+    res = BaseClient.hasError(tmp, "secret");
+    assert.strictEqual(res, true);
+
+    tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}`;
+    res = BaseClient.hasError(tmp, "secret");
+    assert.strictEqual(res, false);
+
+    tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLqtFnsjF1Zy6B6OWbCg="}`;
+    res = BaseClient.hasError(tmp, "secret");
+    assert.strictEqual(res, true);
+
   });
 
   it('getTimestamp should ok', async function () {
     assert.ok(BaseClient.getTimestamp())
   });
+
+  
+  it('getNonce should ok', function() {
+    assert.strictEqual(32, BaseClient.getNonce().length);
+  })
 
 });
 

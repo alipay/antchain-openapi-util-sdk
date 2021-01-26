@@ -4,6 +4,51 @@
  */
 import * as $tea from '@alicloud/tea-typescript';
 import * as kitx from "kitx";
+import { Readable } from 'stream';
+import * as httpx from 'httpx';
+import Util from '@alicloud/tea-util';
+import OssUtil from '@alicloud/oss-util';
+
+export class ErrRes extends $tea.Model {
+  response?: SubResponse;
+  sign: string;
+  static names(): { [key: string]: string } {
+    return {
+      response: 'response',
+      sign: 'sign',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      response:  SubResponse,
+      sign: 'string'
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class SubResponse extends $tea.Model {
+  resultCode?: string;
+  static names(): { [key: string]: string } {
+    return {
+      resultCode: 'result_code',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      resultCode: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
 
 function encode(str: string) {
   var result = encodeURIComponent(str);
@@ -89,14 +134,38 @@ export default class Client {
    * @param res the response
    * @return the boolean
    */
-  static hasError(res: { [key: string]: any }): boolean {
-    if (!res || !res.response) {
+  static hasError(raw: string, secret: string): boolean {
+    var tmp;
+    try{
+      tmp = $tea.cast<ErrRes>(JSON.parse(raw), new ErrRes());
+    } catch {
+      return true;
+    }
+    if(!tmp.response) {
+      return true;
+    }
+
+    if (tmp.response.resultCode && tmp.response.resultCode.toLowerCase() != "ok") {
+        return false;
+    }
+
+    if (!tmp.sign) {
+        return true;
+    }
+
+    let s = raw.indexOf("response");
+    let end = raw.indexOf("sign");
+    let res = raw.substring(s, end);
+    s = res.indexOf("{");
+    end = res.lastIndexOf("}");
+    let stringToSign = res.substring(s, end + 1);
+    const sign = <string>kitx.sha1(stringToSign, secret, 'base64');
+    const signServer = tmp.sign;
+    if(sign === signServer) {
       return false;
     }
-    if (res.response.result_code && res.response.result_code.toString().toLowerCase() !== 'ok') {
-      return true
-    }
-    return false;
+
+    return true;
   }
 
   /**
@@ -110,5 +179,66 @@ export default class Client {
     var stringToSign = canonicalize(normalized);
     return <string>kitx.sha1(stringToSign, secret, 'base64');
   }
+
+  /**
+  * Upload item with urlPath
+  * @param item the file
+  * @param urlPath the upload url
+  */
+  static async putObject(item: Readable, headers: { [key: string]: string }, urlPath: string): Promise<void> {
+    let options: httpx.Options = {
+      method: 'PUT',
+      headers: headers
+    };
+    options.data = item;
+
+    let response = await httpx.request(urlPath, options);
+
+    if (response.statusCode >= 400 && response.statusCode < 600) {
+      const errStr = await Util.readAsString(response);
+      const respMap = OssUtil.getErrMessage(errStr);
+
+      if (respMap["Code"] != null && respMap["Code"] === 'CallbackFailed') {
+        return null;
+      }
+
+      throw $tea.newError({
+        "code": respMap["Code"],
+        "message": respMap["Message"]
+      });
+    }
+  }
+
+  /**
+ * Parse  headers into map[string]string 
+ * @param headers the target headers
+ * @return the map[string]string
+ */
+  static parseUploadHeaders(headers: any): { [key: string]: string } {
+    const byt = JSON.stringify(headers);
+    const tmp = JSON.parse(byt);
+
+    if(Array.isArray(tmp)) {
+      let result = {};
+      for(let i = 0; i < tmp.length; i++) {
+        const item = tmp[i];
+        result[item["name"]] = item["value"];
+      }
+
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+  /**
+ * Generate a nonce string
+ * @return the nonce string
+ */
+  static getNonce(): string {
+    return kitx.makeNonce().replace('-', '');
+  }
+
+
 
 }
