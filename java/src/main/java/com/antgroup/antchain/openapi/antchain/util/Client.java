@@ -51,7 +51,7 @@ public class Client {
      * @example true
      * @error no error throws
      */
-    public static Boolean hasError(String res, String secret) throws Exception {
+    public static Boolean hasError(String res, String secret, String successCode) throws Exception {
         JSONObject response = JSONObject.parseObject(res);
         if (response == null && response.get("response") == null) {
             return true;
@@ -60,12 +60,13 @@ public class Client {
         if (map == null) {
             return true;
         }
-        if ("ok".equalsIgnoreCase(String.valueOf(map.get("result_code")))) {
-            String content = extractStringToSign(res);
-            String sign = sign(content, secret);
-            if (!response.get("sign").equals(sign)) {
-                return true;
-            }
+        if (!"ok".equalsIgnoreCase(String.valueOf(map.get("result_code"))) && !successCode.equalsIgnoreCase(String.valueOf(map.get("result_code")))) {
+            return true;
+        }
+        String content = extractStringToSign(res);
+        String sign = sign(content, secret);
+        if (!response.get("sign").equals(sign)) {
+            return true;
         }
         return false;
     }
