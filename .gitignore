@@ -17,7 +17,7 @@ obj/
 libraries/
 *.sh
 *.cache
-
+**/ts/dist
 **/csharp/**/bin/
 **/csharp/**/obj/
 .vs/
