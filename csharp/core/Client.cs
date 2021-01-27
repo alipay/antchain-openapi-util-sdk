@@ -46,7 +46,7 @@ namespace AntChain.AlipayUtil
             return signedStr;
         }
 
-        public static bool HasError(string raw, string secret)
+        public static bool HasError(string raw, string secret, string successCode)
         {
             ErrRes err = new ErrRes();
             try
@@ -63,9 +63,9 @@ namespace AntChain.AlipayUtil
                 return true;
             }
 
-            if (err.Response.ResultCode != null && err.Response.ResultCode.ToLower() != "ok")
+            if (err.Response.ResultCode != null && err.Response.ResultCode.ToLower() != "ok" && err.Response.ResultCode != successCode)
             {
-                return false;
+                return true;
             }
 
             if (string.IsNullOrEmpty(err.Sign))
