@@ -134,7 +134,7 @@ export default class Client {
    * @param res the response
    * @return the boolean
    */
-  static hasError(raw: string, secret: string): boolean {
+  static hasError(raw: string, secret: string, successCode: string): boolean {
     var tmp;
     try{
       tmp = $tea.cast<ErrRes>(JSON.parse(raw), new ErrRes());
@@ -145,8 +145,8 @@ export default class Client {
       return true;
     }
 
-    if (tmp.response.resultCode && tmp.response.resultCode.toLowerCase() != "ok") {
-        return false;
+    if (tmp.response.resultCode && tmp.response.resultCode.toLowerCase() != "ok" && tmp.response.resultCode != successCode) {
+        return true;
     }
 
     if (!tmp.sign) {
