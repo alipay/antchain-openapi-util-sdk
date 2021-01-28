@@ -32,18 +32,14 @@ class UtilClient
      *
      * @param string     $res          the response string
      * @param string     $secret       the accesskey secret string
-     * @param null|mixed $success_code
      *
      * @return bool the boolean
      *
      * @example true
      * @error   no error throws
      */
-    public static function hasError($res, $secret, $success_code = null)
+    public static function hasError($res, $secret)
     {
-        if (null !== $success_code) {
-            $success_code = strtolower($success_code);
-        }
         $data = @json_decode($res, true);
         if (!$data) {
             return true;
@@ -52,10 +48,8 @@ class UtilClient
             return true;
         }
         $response = $data['response'];
-        if (isset($response['result_code'])
-         && 'ok' !== strtolower($response['result_code'])
-         && $success_code !== strtolower($response['result_code'])) {
-            return true;
+        if (isset($response['result_code']) && 'ok' !== strtolower($response['result_code'])) {
+            return false;
         }
         if (!isset($data['sign'])) {
             return true;

@@ -48,7 +48,7 @@ class Client:
         return datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m-%dT%H:%M:%SZ')
 
     @staticmethod
-    def has_error(res, secret, success_code):
+    def has_error(res, secret):
         """
         Judge if the api called success or not
 
@@ -64,9 +64,8 @@ class Client:
             return True
 
         result_code = tmp['response'].get('result_code')
-        if result_code is not None and str(result_code).upper() != 'OK' \
-                and str(result_code).upper() != success_code.upper():
-            return True
+        if result_code is not None and str(result_code).upper() != 'OK':
+            return False
 
         if tmp.get('sign') is None:
             return True

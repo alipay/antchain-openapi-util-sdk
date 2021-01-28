@@ -2,12 +2,12 @@
 /**
  * This is a utility module
  */
+import OssUtil from '@alicloud/oss-util';
 import * as $tea from '@alicloud/tea-typescript';
+import Util from '@alicloud/tea-util';
+import * as httpx from 'httpx';
 import * as kitx from "kitx";
 import { Readable } from 'stream';
-import * as httpx from 'httpx';
-import Util from '@alicloud/tea-util';
-import OssUtil from '@alicloud/oss-util';
 
 export class ErrRes extends $tea.Model {
   response?: SubResponse;
@@ -134,7 +134,7 @@ export default class Client {
    * @param res the response
    * @return the boolean
    */
-  static hasError(raw: string, secret: string, successCode: string): boolean {
+  static hasError(raw: string, secret: string): boolean {
     var tmp;
     try{
       tmp = $tea.cast<ErrRes>(JSON.parse(raw), new ErrRes());
@@ -145,8 +145,8 @@ export default class Client {
       return true;
     }
 
-    if (tmp.response.resultCode && tmp.response.resultCode.toLowerCase() != "ok" && tmp.response.resultCode != successCode) {
-        return true;
+    if (tmp.response.resultCode && tmp.response.resultCode.toLowerCase() != "ok") {
+        return false;
     }
 
     if (!tmp.sign) {

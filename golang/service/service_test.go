@@ -24,31 +24,27 @@ func Test_GetSignature(t *testing.T) {
 
 func Test_HasError(t *testing.T) {
 	tmp := `testInvalidJson`
-	res := HasError(tea.String(tmp), tea.String("secret"), tea.String("ok"))
+	res := HasError(tea.String(tmp), tea.String("secret"))
 	utils.AssertEqual(t, tea.BoolValue(res), true)
 
 	tmp = `{"noResponse":"true"}`
-	res = HasError(tea.String(tmp), tea.String("secret"), tea.String("ok"))
+	res = HasError(tea.String(tmp), tea.String("secret"))
 	utils.AssertEqual(t, tea.BoolValue(res), true)
 
 	tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"false"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}`
-	res = HasError(tea.String(tmp), tea.String("secret"), tea.String("ok"))
-	utils.AssertEqual(t, tea.BoolValue(res), true)
-
-	tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"success"},"sign":"yzkJeThFNNecgG/fDxFgSWj9tDY="}`
-	res = HasError(tea.String(tmp), tea.String("secret"), tea.String("success"))
+	res = HasError(tea.String(tmp), tea.String("secret"))
 	utils.AssertEqual(t, tea.BoolValue(res), false)
 
 	tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"}}`
-	res = HasError(tea.String(tmp), tea.String("secret"), tea.String("ok"))
+	res = HasError(tea.String(tmp), tea.String("secret"))
 	utils.AssertEqual(t, tea.BoolValue(res), true)
 
 	tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}`
-	res = HasError(tea.String(tmp), tea.String("secret"), tea.String("ok"))
+	res = HasError(tea.String(tmp), tea.String("secret"))
 	utils.AssertEqual(t, tea.BoolValue(res), false)
 
 	tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLqtFnsjF1Zy6B6OWbCg="}`
-	res = HasError(tea.String(tmp), tea.String("secret"), tea.String("ok"))
+	res = HasError(tea.String(tmp), tea.String("secret"))
 	utils.AssertEqual(t, tea.BoolValue(res), true)
 }
 
