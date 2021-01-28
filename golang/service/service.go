@@ -48,7 +48,7 @@ func GetSignature(signedParams map[string]*string, secret *string) (_result *str
  * @param res the response
  * @return the boolean
  */
-func HasError(raw *string, secret *string, successCode *string) *bool {
+func HasError(raw *string, secret *string) *bool {
 	res := tea.StringValue(raw)
 	tmp := make(map[string]interface{})
 	err := json.Unmarshal([]byte(res), &tmp)
@@ -60,9 +60,8 @@ func HasError(raw *string, secret *string, successCode *string) *bool {
 	}
 
 	real, ok := tmp["response"].(map[string]interface{})
-	if ok && real["result_code"] != nil && strings.ToLower(real["result_code"].(string)) != "ok" &&
-		real["result_code"].(string) != tea.StringValue(successCode) {
-		return tea.Bool(true)
+	if ok && real["result_code"] != nil && strings.ToLower(real["result_code"].(string)) != "ok" {
+		return tea.Bool(false)
 	}
 
 	if tmp["sign"] == nil {

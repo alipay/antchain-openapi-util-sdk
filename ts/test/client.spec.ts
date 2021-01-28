@@ -1,9 +1,9 @@
 'use strict';
 
-import BaseClient from "../src/client";
-import rewire from 'rewire';
-import 'mocha';
 import assert from 'assert';
+import 'mocha';
+import rewire from 'rewire';
+import BaseClient from "../src/client";
 
 
 describe('base client', function () {
@@ -22,27 +22,23 @@ describe('base client', function () {
     //assert.strictEqual(res, true);
 
     tmp = `{"noResponse":"true"}`;
-    let res = BaseClient.hasError(tmp, "secret", "ok");
+    let res = BaseClient.hasError(tmp, "secret");
     assert.strictEqual(res, true);
 
     tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"false"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}`;
-    res = BaseClient.hasError(tmp, "secret", "ok");
+    res = BaseClient.hasError(tmp, "secret");
     assert.strictEqual(res, true);
 
-    tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"success"},"sign":"yzkJeThFNNecgG/fDxFgSWj9tDY="}`;
-    res = BaseClient.hasError(tmp, "secret", "success");
-    assert.strictEqual(res, false);
-
     tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"}}`;
-    res = BaseClient.hasError(tmp, "secret", "ok");
+    res = BaseClient.hasError(tmp, "secret");
     assert.strictEqual(res, true);
 
     tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}`;
-    res = BaseClient.hasError(tmp, "secret", "ok");
+    res = BaseClient.hasError(tmp, "secret");
     assert.strictEqual(res, false);
 
     tmp = `{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLqtFnsjF1Zy6B6OWbCg="}`;
-    res = BaseClient.hasError(tmp, "secret", "ok");
+    res = BaseClient.hasError(tmp, "secret");
     assert.strictEqual(res, true);
 
   });

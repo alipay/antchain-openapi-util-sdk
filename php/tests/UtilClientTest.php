@@ -35,12 +35,8 @@ class UtilClientTest extends TestCase
         $res = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLqtFnsjF1Zy6B6OWbCg=';
         $this->assertTrue(UtilClient::hasError($res, 'secret'));
 
-        // not equal to success_code
-        $res = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"success"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}';
-        $this->assertTrue(UtilClient::hasError($res, 'secret', 'failed'));
-
         $res = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}';
-        $this->assertFalse(UtilClient::hasError($res, 'secret', 'ok'));
+        $this->assertFalse(UtilClient::hasError($res, 'secret'));
     }
 
     public function testSignature()
