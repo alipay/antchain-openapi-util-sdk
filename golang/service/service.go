@@ -190,3 +190,7 @@ func getUrlFormedMap(source map[string]string) (urlEncoded string) {
 	urlEncoded = urlEncoder.Encode()
 	return
 }
+
+func IsSuccess(resultCode, successCode string) bool {
+	return strings.EqualFold(resultCode, "ok") || strings.EqualFold(resultCode, successCode)
+}
