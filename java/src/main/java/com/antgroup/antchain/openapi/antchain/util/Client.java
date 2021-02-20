@@ -260,4 +260,15 @@ public class Client {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
+    /**
+     * Judge upload is ok
+     *
+     * @return the boolean
+     * @example resultMsg == ok is true
+     * @error no error throws
+     */
+    public static boolean isSuccess(String resultCode, String successCode) {
+        return resultCode.equalsIgnoreCase("ok") || resultCode.equalsIgnoreCase(successCode);
+    }
+
 }

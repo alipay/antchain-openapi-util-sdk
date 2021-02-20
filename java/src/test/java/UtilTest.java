@@ -13,7 +13,15 @@ public class UtilTest {
                 "aliyuncs.com/gatewayx/kjrx355r85e0dc9c/kjrx355r85e0dc9c?Expires=1610333907&OSSAccessKeyId="+
                 "xxxxxx&Signature=xxxxx%3D&response-content-disposition="+
                 "application%2Foctet-stream\",\"result_code\":\"OK\"},\"sign\":\"dYj+3O1oOl8bwh3vjfDMody6caY=\"}";
-        boolean error = Client.hasError(content, "xxxxx", "yes");
+        boolean error = Client.hasError(content, "xxxxx");
         Assert.assertEquals(false, error);
+    }
+
+    @Test
+    public void testIsSuccess() {
+        String strA = "Java";
+        String strB = "java";
+        boolean eq = Client.isSuccess(strA, strB);
+        Assert.assertEquals(true, eq);
     }
 }
