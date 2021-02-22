@@ -49,3 +49,12 @@ static function parseUploadHeaders(headers: any): map[string]string;
  * @return the nonce string
  */
 static function getNonce(): string;
+
+/**
+* Judge upload if ok or not
+*
+* @return the boolean
+* @example resultCode == successCode or resultCode == ok is true
+* @error no error throws
+*/
+static function isSuccess(resultCode: string, successCode: string): boolean;
