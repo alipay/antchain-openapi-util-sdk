@@ -99,6 +99,7 @@ func PutObject(item io.Reader, headers map[string]*string, urlPath *string) erro
 	if err != nil {
 		return errors.New("Upload file failed.")
 	}
+	defer resp.Body.Close()
 
 	if resp.StatusCode >= 400 && resp.StatusCode < 600 {
 		bodyStr, err := util.ReadAsString(resp.Body)
