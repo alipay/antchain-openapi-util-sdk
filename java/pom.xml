@@ -80,6 +80,11 @@
             <version>0.8.5</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>oss-util</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

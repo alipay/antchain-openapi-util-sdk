@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.alibaba.fastjson.*;
+import com.aliyun.tea.*;
 import com.aliyun.tea.TeaModel;
 import org.apache.commons.io.IOUtils;
 
@@ -214,6 +215,30 @@ public class Client {
             IOUtils.copy(item, out);
             out.flush();
             out.close();
+            int statusCode = conn.getResponseCode();
+            if (statusCode >= 400 && statusCode <=600) {
+                String bodyStr = "";
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    bodyStr += line + "\n";
+                }
+                reader.close();
+                // 处理结果
+                Map<String, Object> respMap = com.aliyun.ossutil.Client.getErrMessage(bodyStr);
+                if (respMap.get("Code") != null && String.valueOf(respMap.get("Code")) != "CallbackFailed") {
+                    throw new TeaException(TeaConverter.buildMap(
+                        new TeaPair("code", respMap.get("Code")),
+                        new TeaPair("message", respMap.get("Message")),
+                        new TeaPair("data", TeaConverter.buildMap(
+                            new TeaPair("httpCode", statusCode),
+                            new TeaPair("requestId", respMap.get("RequestId")),
+                            new TeaPair("hostId", respMap.get("HostId"))
+                        ))
+                    ));
+                }
+            }
             conn.disconnect();
         } finally {
             if (conn != null) {
