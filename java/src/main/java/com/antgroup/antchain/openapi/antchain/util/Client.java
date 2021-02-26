@@ -219,7 +219,7 @@ public class Client {
             if (statusCode >= 400 && statusCode <=600) {
                 String bodyStr = "";
                 BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(conn.getInputStream()));
+                        new InputStreamReader(conn.getErrorStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
                     bodyStr += line + "\n";
