@@ -60,19 +60,19 @@ class UtilClientTest extends TestCase
         $this->assertEquals('rcDNNSTdufjwCpRqzFpoV5bC0IU=', UtilClient::getSignature($params, 'secret'));
 
         $signedParam = [
-            "req_msg_id"       => "462b26b053d611eb82176c96cfdde571",
-            "method"           => "demo.gateway.check.echo",
-            "version"          => "2.0.0",
-            "input_string"     => "OK",
-            "sign_type"        => "HmacSHA1",
-            "req_time"         => "2021-01-11T06:28:53Z",
-            "access_key"       => "ACn9BRjVEJfaPeeI",
-            "base_sdk_version" => "Tea-SDK",
-            "sdk_version"      => "Tea-SDK-20201203",
-            "file_id"          => "kjs6qx6xad54d8c0",
-            'fileObject'       => new Stream(fopen('data://text/plain;base64,' . base64_encode('This is test file content.'), 'r'))
+            'req_msg_id'       => '462b26b053d611eb82176c96cfdde571',
+            'method'           => 'demo.gateway.check.echo',
+            'version'          => '2.0.0',
+            'input_string'     => 'OK',
+            'sign_type'        => 'HmacSHA1',
+            'req_time'         => '2021-01-11T06:28:53Z',
+            'access_key'       => 'ACn9BRjVEJfaPeeI',
+            'base_sdk_version' => 'Tea-SDK',
+            'sdk_version'      => 'Tea-SDK-20201203',
+            'file_id'          => 'kjs6qx6xad54d8c0',
+            'fileObject'       => new Stream(fopen('data://text/plain;base64,' . base64_encode('This is test file content.'), 'r')),
         ];
-        $str         = "access_key=ACn9BRjVEJfaPeeI&base_sdk_version=Tea-SDK&file_id=kjs6qx6xad54d8c0&input_string=OK&method=demo.gateway.check.echo&req_msg_id=462b26b053d611eb82176c96cfdde571&req_time=2021-01-11T06%3A28%3A53Z&sdk_version=Tea-SDK-20201203&sign_type=HmacSHA1&version=2.0.0";
+        $str         = 'access_key=ACn9BRjVEJfaPeeI&base_sdk_version=Tea-SDK&file_id=kjs6qx6xad54d8c0&input_string=OK&method=demo.gateway.check.echo&req_msg_id=462b26b053d611eb82176c96cfdde571&req_time=2021-01-11T06%3A28%3A53Z&sdk_version=Tea-SDK-20201203&sign_type=HmacSHA1&version=2.0.0';
         $this->assertEquals($str, UtilClient::getSignatureString($signedParam));
     }
 
@@ -102,5 +102,12 @@ class UtilClientTest extends TestCase
         ];
         $sign         = UtilClient::getSignature($signedParams, 'secret');
         $this->assertEquals('qlB4B1lFcehlWRelL7Fo4uNHPCs=', $sign);
+    }
+
+    public function testIsSuccess()
+    {
+        $this->assertTrue(UtilClient::isSuccess('OK', 'success'));
+        $this->assertTrue(UtilClient::isSuccess('success', 'success'));
+        $this->assertFalse(UtilClient::isSuccess('failed', 'success'));
     }
 }
