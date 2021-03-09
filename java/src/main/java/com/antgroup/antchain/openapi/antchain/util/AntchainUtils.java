@@ -17,7 +17,7 @@ import com.aliyun.tea.*;
 import com.aliyun.tea.TeaModel;
 import org.apache.commons.io.IOUtils;
 
-public class Client {
+public class AntchainUtils {
     private static final Pattern ENCODED_CHARACTERS_PATTERN;
     private static final String DEFAULT_ENCODING = "UTF-8";
 
