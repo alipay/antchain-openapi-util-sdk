@@ -5,7 +5,7 @@
 	"main": "./main.tea",
 	"releases": {
 		"go": "github.com/antchain-openapi-sdk-go/antchain-util/service:v0.0.4",
-		"java": "com.antgroup.antchain.openapi:antchain-util:0.1.7",
+		"java": "com.antgroup.antchain.openapi:antchain-util:0.1.8",
 		"ts": "@antchain/alipay-util:^1.0.2",
 		"csharp": "AntChain.AlipayUtil:0.1.3",
 		"php": "antchain/antchain-util:^0.1.1",

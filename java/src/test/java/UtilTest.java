@@ -1,5 +1,9 @@
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Calendar;
+import java.util.Date;
+
 import com.antgroup.antchain.openapi.antchain.util.*;
 
 public class UtilTest {
@@ -23,5 +27,30 @@ public class UtilTest {
         String strB = "java";
         boolean eq = AntchainUtils.isSuccess(strA, strB);
         Assert.assertEquals(true, eq);
+    }
+
+    @Test
+    public void testFormatDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2021);
+        calendar.set(Calendar.MONTH, 2);
+        calendar.set(Calendar.DAY_OF_MONTH, 9);
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.MINUTE, 35);
+        calendar.set(Calendar.SECOND, 20);
+        calendar.set(Calendar.MILLISECOND, 253);
+
+        Date date = calendar.getTime();
+        Assert.assertEquals(AntchainUtils.formatDate(date), "2021-03-09T18:35:20.253+08:00");
+    }
+
+    @Test
+    public void testParseDate() {
+        String date = "2020-09-10T00:00:00.000+0800";
+        String date1 = "2020-09-10T00:00:00+08:00";
+        String date2 = "2020-09-10T00:00:00Z";
+        Assert.assertEquals(AntchainUtils.parseDate(date).toString(), "Thu Sep 10 00:00:00 CST 2020");
+        Assert.assertEquals(AntchainUtils.parseDate(date1).toString(), "Thu Sep 10 00:00:00 CST 2020");
+        Assert.assertEquals(AntchainUtils.parseDate(date2).toString(),"Thu Sep 10 08:00:00 CST 2020");
     }
 }
