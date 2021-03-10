@@ -15,7 +15,10 @@ import java.util.regex.Pattern;
 import com.alibaba.fastjson.*;
 import com.aliyun.tea.*;
 import com.aliyun.tea.TeaModel;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.io.IOUtils;
+import org.joda.time.format.*;
+import org.joda.time.*;
 
 public class AntchainUtils {
     private static final Pattern ENCODED_CHARACTERS_PATTERN;
@@ -296,4 +299,23 @@ public class AntchainUtils {
         return resultCode.equalsIgnoreCase("ok") || resultCode.equalsIgnoreCase(successCode);
     }
 
+    /**
+     * string to date
+     *
+     * @param date
+     * @return the date
+     */
+    public static Date parseDate(String date) {
+        return StringUtils.isEmpty(date) ? null : ISODateTimeFormat.dateTimeParser().parseDateTime(date).toDate();
+    }
+
+    /**
+     * date to string
+     *
+     * @param date
+     * @return the string
+     */
+    public static String formatDate(Date date) {
+        return date == null ? null : new DateTime(date).toString();
+    }
 }
