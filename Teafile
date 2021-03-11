@@ -26,7 +26,7 @@
 	},
 	"csharp":{
 		"namespace": "AntChain.AlipayUtil",
-		"className": "Client",
+		"className": "AntchainUtils",
 		"packageInfo": {
 			"name": "alipayutil",
 			"title": "antchain-alipayutil",
