@@ -6,6 +6,7 @@ use AlibabaCloud\Tea\Exception\TeaError;
 use AlibabaCloud\Tea\OSSUtils\OSSUtils;
 use AlibabaCloud\Tea\Tea;
 use AlibabaCloud\Tea\Utils\Utils;
+use DateTime;
 use Exception;
 use GuzzleHttp\Psr7\Stream;
 
@@ -92,7 +93,7 @@ class UtilClient
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      *
-     * @return null|TeaError
+     * @return TeaError|null
      */
     public static function putObject($item, $headers, $urlPath)
     {
@@ -191,5 +192,25 @@ class UtilClient
         $successCode = strtolower($successCode);
 
         return 'ok' === $resultCode || $resultCode === $successCode;
+    }
+
+    /**
+     * @param string $dateStr
+     *
+     * @return Datetime
+     */
+    public static function parseDate($dateStr)
+    {
+        return new DateTime($dateStr);
+    }
+
+    /**
+     * @param Datetime $datetime
+     *
+     * @return string
+     */
+    public static function formatDate($datetime, $format='Y-m-d H:i:s')
+    {
+        return $datetime->format($format);
     }
 }
