@@ -30,8 +30,8 @@ class UtilClient
     /**
      * Judge if the api called success or not.
      *
-     * @param string     $res          the response string
-     * @param string     $secret       the accesskey secret string
+     * @param string $res    the response string
+     * @param string $secret the accesskey secret string
      *
      * @return bool the boolean
      *
@@ -172,5 +172,24 @@ class UtilClient
         }
 
         return implode('&', $params);
+    }
+
+    /**
+     * Judge upload if ok or not.
+     * *
+     * @example resultCode == successCode or resultCode == ok is true
+     * @error no error throws
+     *
+     * @param string $resultCode
+     * @param string $successCode
+     *
+     * @return bool the boolean
+     */
+    public static function isSuccess($resultCode, $successCode)
+    {
+        $resultCode  = strtolower($resultCode);
+        $successCode = strtolower($successCode);
+
+        return 'ok' === $resultCode || $resultCode === $successCode;
     }
 }
