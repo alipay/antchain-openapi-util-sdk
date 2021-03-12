@@ -318,7 +318,7 @@ namespace AntChain.AlipayUtil
         * @example resultCode == successCode or resultCode == ok is true
         * @error no error throws
         */
-        public static bool? IsSuccess(string resultCode, string successCode)
+        public static bool IsSuccess(string resultCode, string successCode)
         {
             resultCode = resultCode.ToLower();
             successCode = successCode.ToLower();
