@@ -45,7 +45,7 @@
 	},
 	"python": {
 		"package": "antchain_alipay_util",
-		"clientName": "client",
+		"clientName": "antchain_utils",
 		"packageInfo": {
 			"name": "antchain_alipay_util",
 			"desc": "Ant Chain Util Library for Python",
