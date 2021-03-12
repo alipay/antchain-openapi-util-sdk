@@ -239,6 +239,16 @@ export default class Client {
     return kitx.makeNonce().replace('-', '');
   }
 
+  /**
+ * success
+ * @return the success result
+ */
+  static isSuccess(resultCode: string, successCode: string): boolean{
+    resultCode = resultCode.toLocaleLowerCase();
+    successCode = successCode.toLocaleLowerCase();
+    return 'ok' === resultCode || resultCode == successCode;
+  }
+
 
 
 }
