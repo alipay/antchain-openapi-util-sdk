@@ -1,5 +1,5 @@
 import unittest
-from antchain_alipay_util.client import Client
+from antchain_alipay_util.antchain_utils import AntchainUtils
 from Tea.exceptions import TeaException
 
 import threading
@@ -43,56 +43,56 @@ class TestClient(unittest.TestCase):
         server.start()
 
     def test_get_timestamp(self):
-        timestamp = Client.get_timestamp()
+        timestamp = AntchainUtils.get_timestamp()
         self.assertEqual(20, len(timestamp))
 
     def test_has_error(self):
         tmp = 'testInvalidJson'
-        resp = Client.has_error(tmp, 'secret')
+        resp = AntchainUtils.has_error(tmp, 'secret')
         self.assertTrue(resp)
 
         tmp = '{"noResponse":"true"}'
-        resp = Client.has_error(tmp, 'secret')
+        resp = AntchainUtils.has_error(tmp, 'secret')
         self.assertTrue(resp)
 
         tmp = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":' \
               '"79e093b3ae0f3f2c1","result_code":"false"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}'
-        resp = Client.has_error(tmp, 'secret')
+        resp = AntchainUtils.has_error(tmp, 'secret')
         self.assertFalse(resp)
 
         tmp = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":' \
               '"79e093b3ae0f3f2c1","result_code":"OK"}}'
-        resp = Client.has_error(tmp, 'secret')
+        resp = AntchainUtils.has_error(tmp, 'secret')
         self.assertTrue(resp)
 
         tmp = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":' \
               '"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLq7utFnsjF1Zy6B6OWbCg="}'
-        resp = Client.has_error(tmp, 'secret')
+        resp = AntchainUtils.has_error(tmp, 'secret')
         self.assertFalse(resp)
 
         tmp = '{"response":{"expired_time":"2021-01-04T17:04:42.072+08:00","file_id":"kjiac1a298f8d","req_msg_id":' \
               '"79e093b3ae0f3f2c1","result_code":"OK"},"sign":"IUl/4uLqtFnsjF1Zy6B6OWbCg="}'
-        resp = Client.has_error(tmp, 'secret')
+        resp = AntchainUtils.has_error(tmp, 'secret')
         self.assertTrue(resp)
 
     def test_get_signature(self):
         params = {
             'test': 'ok'
         }
-        signature = Client.get_signature(params, 'secret')
+        signature = AntchainUtils.get_signature(params, 'secret')
         self.assertEqual('qlB4B1lFcehlWRelL7Fo4uNHPCs=', signature)
 
     def test_get_nonce(self):
-        self.assertEqual(32, len(Client.get_nonce()))
+        self.assertEqual(32, len(AntchainUtils.get_nonce()))
 
     def test_parse_upload_headers(self):
-        res = Client.parse_upload_headers(12)
+        res = AntchainUtils.parse_upload_headers(12)
         self.assertEqual({}, res)
 
-        res = Client.parse_upload_headers('{"test":"ok"}')
+        res = AntchainUtils.parse_upload_headers('{"test":"ok"}')
         self.assertEqual({}, res)
 
-        res = Client.parse_upload_headers([
+        res = AntchainUtils.parse_upload_headers([
             {
                 "name": "content-type",
                 "value": "text",
@@ -108,12 +108,25 @@ class TestClient(unittest.TestCase):
     def test_put_object(self):
         url = 'http://127.0.0.1:8888'
         with open('test.txt', 'rb') as f:
-            Client.put_object(f, {'expected': 'success'}, url)
+            AntchainUtils.put_object(f, {'expected': 'success'}, url)
 
         with open('test.txt', 'rb') as f:
             try:
-                Client.put_object(f, {'expected': 'fail'}, url)
+                AntchainUtils.put_object(f, {'expected': 'fail'}, url)
                 assert False
             except TeaException as e:
                 self.assertEqual('NoSuchKey', e.code)
                 self.assertEqual(400, e.data['httpCode'])
+
+    def test_is_success(self):
+        s1 = 'OK'
+        s2 = 'fail'
+        self.assertTrue(AntchainUtils.is_success(s1, s2))
+
+        s1 = 'fail'
+        s2 = 'OK'
+        self.assertFalse(AntchainUtils.is_success(s1, s2))
+
+        s1 = 'fail'
+        s2 = 'fail'
+        self.assertTrue(AntchainUtils.is_success(s1, s2))
