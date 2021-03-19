@@ -53,4 +53,11 @@ public class UtilTest {
         Assert.assertEquals(AntchainUtils.parseDate(date1).toString(), "Thu Sep 10 00:00:00 CST 2020");
         Assert.assertEquals(AntchainUtils.parseDate(date2).toString(),"Thu Sep 10 08:00:00 CST 2020");
     }
+
+    @Test
+    public void testAddInteger() {
+        Integer num = -1;
+        Integer num1 = 1;
+        Assert.assertEquals(AntchainUtils.addInteger(num, num1).intValue(), 0);
+    }  
 }
