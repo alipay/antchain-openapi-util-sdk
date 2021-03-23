@@ -318,4 +318,13 @@ public class AntchainUtils {
     public static String formatDate(Date date) {
         return date == null ? null : new DateTime(date).toString();
     }
+
+    /**
+     * add two integer
+     *
+     * @return result num add num1 
+     */
+    public static Integer addInteger(Integer num, Integer num1) {
+        return num + num1;
+    }
 }
