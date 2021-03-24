@@ -70,8 +70,8 @@ class AntchainUtils:
         if tmp.get('sign') is None:
             return True
 
-        s = index(res, "response")
-        end = index(res, "sign")
+        s = index(res, '"response"')
+        end = index(res, '"sign"')
         res = res[s:end]
         s = index(res, "{")
         end = index(res, "}")
