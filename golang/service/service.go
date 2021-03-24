@@ -67,8 +67,8 @@ func HasError(raw *string, secret *string) *bool {
 	if tmp["sign"] == nil {
 		return tea.Bool(true)
 	}
-	s := strings.Index(res, "response")
-	end := strings.Index(res, "sign")
+	s := strings.Index(res, "\"response\"")
+	end := strings.Index(res, "\"sign\"")
 	res = res[s:end]
 	s = strings.Index(res, "{")
 	end = strings.LastIndex(res, "}")
