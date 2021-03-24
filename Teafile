@@ -9,7 +9,7 @@
 		"ts": "@antchain/alipay-util:^1.0.4",
 		"csharp": "AntChain.AlipayUtil:0.1.6",
 		"php": "antchain/antchain-util:^0.1.1",
-		"python": "antchain_alipay_util:1.0.0"
+		"python": "antchain_alipay_util:1.0.1"
 	},
 	"java": {
 		"package": "com.antgroup.antchain.openapi.antchain.util",
