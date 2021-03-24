@@ -55,6 +55,10 @@ namespace tests
                 "{\"response\":{\"expired_time\":\"2021-01-04T17:04:42.072+08:00\",\"file_id\":\"kjiac1a298f8d\",\"req_msg_id\":\"79e093b3ae0f3f2c1\",\"result_code\":\"OK\"},\"sign\":\"IUl/4uLqtFnsjF1Zy6B6OWbCg=\"}";
             res = AntchainUtils.HasError(tmp, "secret");
             Assert.True(res);
+            
+            tmp = "{\"response\":{\"signatureValue\":\"test\",\"expired_time\":\"2021-01-04T17:04:42.072+08:00\",\"file_id\":\"kjiac1a298f8d\",\"req_msg_id\":\"79e093b3ae0f3f2c1\",\"result_code\":\"OK\"},\"sign\":\"IUl/4uLqtFnsjF1Zy6B6OWbCg=\"}";
+            res = AntchainUtils.HasError(tmp, "secret");
+            Assert.True(res);
         }
 
         [Fact]

@@ -73,9 +73,9 @@ namespace AntChain.AlipayUtil
                 return true;
             }
 
-            int s = raw.IndexOf("response");
-            int end = raw.IndexOf("sign");
-            string res = raw.Substring(s - 1, end - s - 1);
+            int s = raw.IndexOf("\"response\"");
+            int end = raw.IndexOf("\"sign\"");
+            string res = raw.Substring(s, end - s - 1);
             s = res.IndexOf('{');
             end = res.LastIndexOf('}');
             string signToString = res.Substring(s, end - s + 1);
