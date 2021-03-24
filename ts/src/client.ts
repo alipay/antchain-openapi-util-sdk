@@ -21,7 +21,7 @@ export class ErrRes extends $tea.Model {
 
   static types(): { [key: string]: any } {
     return {
-      response:  SubResponse,
+      response: SubResponse,
       sign: 'string'
     };
   }
@@ -136,32 +136,32 @@ export default class Client {
    */
   static hasError(raw: string, secret: string): boolean {
     var tmp;
-    try{
+    try {
       tmp = $tea.cast<ErrRes>(JSON.parse(raw), new ErrRes());
     } catch {
       return true;
     }
-    if(!tmp.response) {
+    if (!tmp.response) {
       return true;
     }
 
     if (tmp.response.resultCode && tmp.response.resultCode.toLowerCase() != "ok") {
-        return false;
+      return false;
     }
 
     if (!tmp.sign) {
-        return true;
+      return true;
     }
 
-    let s = raw.indexOf("response");
-    let end = raw.indexOf("sign");
-    let res = raw.substring(s, end);
+    let s = raw.indexOf("\"response\"");
+    let end = raw.indexOf("\"sign\"");
+    let res = raw.substring(s, end - 1);
     s = res.indexOf("{");
     end = res.lastIndexOf("}");
     let stringToSign = res.substring(s, end + 1);
     const sign = <string>kitx.sha1(stringToSign, secret, 'base64');
     const signServer = tmp.sign;
-    if(sign === signServer) {
+    if (sign === signServer) {
       return false;
     }
 
@@ -218,9 +218,9 @@ export default class Client {
     const byt = JSON.stringify(headers);
     const tmp = JSON.parse(byt);
 
-    if(Array.isArray(tmp)) {
+    if (Array.isArray(tmp)) {
       let result = {};
-      for(let i = 0; i < tmp.length; i++) {
+      for (let i = 0; i < tmp.length; i++) {
         const item = tmp[i];
         result[item["name"]] = item["value"];
       }
@@ -243,7 +243,7 @@ export default class Client {
  * success
  * @return the success result
  */
-  static isSuccess(resultCode: string, successCode: string): boolean{
+  static isSuccess(resultCode: string, successCode: string): boolean {
     resultCode = resultCode.toLocaleLowerCase();
     successCode = successCode.toLocaleLowerCase();
     return 'ok' === resultCode || resultCode == successCode;
