@@ -19,6 +19,11 @@ def index(s, sub_str):
     except ValueError:
         return -1
 
+def rindex(s, sub_str):
+    try:
+        return s.rindex(sub_str)
+    except ValueError:
+        return -1
 
 def get_err_message(msg):
     err_fields = ('Code', 'Message', 'RequestId', 'HostId')
@@ -74,7 +79,7 @@ class AntchainUtils:
         end = index(res, '"sign"')
         res = res[s:end]
         s = index(res, "{")
-        end = index(res, "}")
+        end = rindex(res, "}")
         str_to_sign = res[s: end + 1]
 
         signature = sign(str_to_sign, secret)
