@@ -353,7 +353,12 @@ namespace AntChain.AlipayUtil
         internal static string GetUrlFormedMap(Dictionary<string, string> source)
         {
             List<string> sortedKeys = source.Keys.ToList();
-            sortedKeys.Sort();
+//            sortedKeys.Sort();
+            sortedKeys.Sort((Comparison<String>) (
+                (String left, String right) => {
+                return String.CompareOrdinal(left, right);
+                }
+            ));
             StringBuilder canonicalizedQueryString = new StringBuilder();
 
             for (int i = 0; i < sortedKeys.Count; i++)
