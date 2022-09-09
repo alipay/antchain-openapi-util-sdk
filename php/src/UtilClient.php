@@ -168,13 +168,7 @@ class UtilClient
                 continue;
             }
             if (null !== $v) {
-                if ($v === true) {
-                     $params[] = $k . '=' . "1";
-                }elseif ($v === false) {
-                     $params[] = $k . '=' . "0";
-                }else {
-                     $params[] = $k . '=' . rawurlencode($v);
-                }
+                $params[] = $k . '=' . rawurlencode($v);
             }
         }
 
