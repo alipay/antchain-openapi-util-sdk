@@ -149,6 +149,17 @@ func ParseUploadHeaders(headers interface{}) map[string]*string {
 }
 
 /**
+ * put trace to headers
+ * 
+ * @param headers
+ * @return headers
+*/
+func PutTrace(headers map[string]*string) map[string]*string {
+	return headers
+}
+
+
+/**
  * Generate a nonce string
  * @return the nonce string
  */

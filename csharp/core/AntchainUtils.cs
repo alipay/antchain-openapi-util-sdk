@@ -302,9 +302,18 @@ namespace AntChain.AlipayUtil
             return result;
         }
 
+    
         /// <summary>
-        /// Generate a nonce string
+        /// put trace to headers
         /// </summary>
+        /// <param name="headers"></param>
+        /// <returns>map[string]string</returns>
+        public static Dictionary<string, string> PutTrace(Dictionary<string, string> headers)
+        {
+            return headers;
+        }
+
+        
         /// <returns>the nonce string</returns>
         public static string GetNonce()
         {

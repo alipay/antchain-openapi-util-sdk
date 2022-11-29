@@ -19,6 +19,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.joda.time.format.*;
 import org.joda.time.*;
+import com.alipay.common.tracer.core.context.span.SofaTracerSpanContext;
+import com.alipay.common.tracer.core.holder.SofaTraceContextHolder;
+import com.alipay.common.tracer.core.span.SofaTracerSpan;
 
 public class AntchainUtils {
     private static final Pattern ENCODED_CHARACTERS_PATTERN;
@@ -327,4 +330,44 @@ public class AntchainUtils {
     public static Integer addInteger(Integer num, Integer num1) {
         return num + num1;
     }
+
+    /**
+     * put trace to headers
+     * 
+     * @param headers
+     * @return headers
+     */
+    public static Map<String, String> putTrace(Map<String, String> headers){
+        try {
+            if (StringUtils.isEmpty(headers.get("X-B3-TraceId")) && StringUtils.isEmpty(headers.get("SOFA-TraceId"))){
+                String traceId = "";
+                String spanId = "";
+                SofaTracerSpan currentSpan = SofaTraceContextHolder.getSofaTraceContext().getCurrentSpan();
+                if (currentSpan != null && currentSpan.getSofaTracerSpanContext() != null){
+                    traceId = currentSpan.getSofaTracerSpanContext().getTraceId();
+                    spanId = currentSpan.getSofaTracerSpanContext().nextChildContextId();
+                }
+
+                if(StringUtils.isEmpty(traceId)){
+                    SofaTracerSpanContext spanContext = SofaTracerSpanContext.rootStart();
+                    traceId = spanContext.getTraceId();
+                    spanId = "0.1";
+                }
+                headers.put("X-B3-TraceId", traceId);
+                headers.put("X-B3-SpanId", spanId);
+                headers.put("SOFA-TraceId", traceId);
+                headers.put("SOFA-RpcId", spanId);
+                headers.put("SOFA-SpanId", spanId);
+            }else if(StringUtils.isEmpty(headers.get("X-B3-SpanId")) && StringUtils.isEmpty(headers.get("SOFA-SpanId")) && StringUtils.isEmpty(headers.get("SOFA-RpcId"))){
+                headers.put("X-B3-SpanId", "0.1");
+                headers.put("SOFA-RpcId", "0.1");
+                headers.put("SOFA-SpanId", "0.1");
+            }
+        } catch (Exception e) {
+            System.out.println(e != null ? e.getMessage() : "unknow error");
+        }
+
+        return headers;
+    }
+    
 }

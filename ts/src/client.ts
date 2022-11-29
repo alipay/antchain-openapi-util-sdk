@@ -232,6 +232,17 @@ export default class Client {
   }
 
   /**
+     * put trace to headers
+     * 
+     * @param headers
+     * @return headers
+  */
+   static putTrace(headers: { [key: string]: string }): { [key: string]: string } {
+      return headers;
+   }
+
+
+  /**
  * Generate a nonce string
  * @return the nonce string
  */

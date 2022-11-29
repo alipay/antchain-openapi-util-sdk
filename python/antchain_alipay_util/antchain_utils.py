@@ -146,6 +146,15 @@ class AntchainUtils:
         return tmp
 
     @staticmethod
+    def put_trace(headers):
+        """
+        Put trace to headers
+        @param headers the target headers
+        @return the map[string]string
+        """
+        return headers
+
+    @staticmethod
     def get_nonce():
         """
         Generate a nonce string
