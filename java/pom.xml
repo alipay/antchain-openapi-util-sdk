@@ -5,7 +5,7 @@
 
     <groupId>com.antgroup.antchain.openapi</groupId>
     <artifactId>antchain-util</artifactId>
-    <version>0.1.9</version>
+    <version>0.1.10</version>
     <packaging>jar</packaging>
 
     <name>antchain-util</name>
