@@ -302,7 +302,6 @@ namespace AntChain.AlipayUtil
             return result;
         }
 
-    
         /// <summary>
         /// put trace to headers
         /// </summary>
@@ -313,7 +312,9 @@ namespace AntChain.AlipayUtil
             return headers;
         }
 
-        
+        /// <summary>
+        /// Generate a nonce string
+        /// </summary>
         /// <returns>the nonce string</returns>
         public static string GetNonce()
         {
