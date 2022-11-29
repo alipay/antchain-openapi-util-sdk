@@ -150,6 +150,17 @@ class UtilClient
     }
 
     /**
+     * put trace to headers
+     * 
+     * @param string[] $headers
+     * @return headers
+     */
+    public static function putTrace($headers)
+    {
+        return $headers;
+    }
+
+    /**
      * Generate a nonce string.
      *
      * @return string the nonce string

@@ -303,6 +303,16 @@ namespace AntChain.AlipayUtil
         }
 
         /// <summary>
+        /// put trace to headers
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <returns>map[string]string</returns>
+        public static Dictionary<string, string> PutTrace(Dictionary<string, string> headers)
+        {
+            return headers;
+        }
+
+        /// <summary>
         /// Generate a nonce string
         /// </summary>
         /// <returns>the nonce string</returns>

@@ -96,6 +96,11 @@
             <version>2.6</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>tracer-core</artifactId>
+            <version>3.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>
