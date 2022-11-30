@@ -231,7 +231,6 @@ public class AntchainUtils {
                     bodyStr += line + "\n";
                 }
                 reader.close();
-                // 处理结果
                 Map<String, Object> respMap = com.aliyun.ossutil.Client.getErrMessage(bodyStr);
                 if (respMap.get("Code") != null && String.valueOf(respMap.get("Code")) != "CallbackFailed") {
                     throw new TeaException(TeaConverter.buildMap(
