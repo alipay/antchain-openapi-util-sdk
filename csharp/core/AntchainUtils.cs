@@ -351,7 +351,7 @@ namespace AntChain.AlipayUtil
             var signParams = new Dictionary<string, string>();
             foreach (var keypair in signedParam)
             {
-                if (!string.IsNullOrEmpty(keypair.Value))
+                if (keypair.Value != null)
                 {
                     signParams.Add(keypair.Key, keypair.Value);
                 }
