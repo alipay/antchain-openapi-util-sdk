@@ -26,6 +26,30 @@ namespace tests
         }
 
         [Fact]
+        public void Test_GetSignature_With_EmptyString()
+        {
+            var signedParams = new Dictionary<string, string>
+            {
+                {"test", ""},
+            };
+
+            string sign = AntchainUtils.GetSignature(signedParams, "secret");
+            Assert.Equal("tRKmeopbrCgTCq1t8aAYCo9lKWE=", sign);
+        }
+
+        [Fact]
+        public void Test_GetSignature_With_Null()
+        {
+            var signedParams = new Dictionary<string, string>
+            {
+                {"test", null},
+            };
+
+            string sign = AntchainUtils.GetSignature(signedParams, "secret");
+            Assert.Equal("tRKmeopbrCgTCq1t8aAYCo9lKWE=", sign);
+        }
+
+        [Fact]
         public void Test_HasError()
         {
             string tmp = "testInvalidJson";
