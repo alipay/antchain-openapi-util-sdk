@@ -5,7 +5,7 @@
 
     <groupId>com.antgroup.antchain.openapi</groupId>
     <artifactId>antchain-util</artifactId>
-    <version>0.1.10</version>
+    <version>0.1.12</version>
     <packaging>jar</packaging>
 
     <name>antchain-util</name>
@@ -66,7 +66,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.75</version>
+            <version>1.2.84</version>
         </dependency>
         <dependency>
             <groupId>com.aliyun</groupId>
@@ -88,7 +88,7 @@
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>oss-util</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
